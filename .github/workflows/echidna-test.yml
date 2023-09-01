@@ -1,0 +1,36 @@
+name: Echidna Test
+
+on:
+  push:
+  pull_request:
+
+env:
+  FOUNDRY_PROFILE: ci
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Compile contracts
+        run: |
+          yarn
+          forge install
+          forge build
+
+      - name: Run Echidna
+        uses: crytic/echidna-action@v2
+        with:
+          # echidna-workdir: packages/contracts/src
+          files: packages/contracts/src
+          # contract: TokenEchidna
+          crytic-args: --ignore-compile

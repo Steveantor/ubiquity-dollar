@@ -31,3 +31,6 @@
 	url = https://github.com/Uniswap/v3-periphery.git
 	branch= main
 
+[submodule "packages/contracts/lib/properties"]
+	path = packages/contracts/lib/properties
+	url = https://github.com/crytic/properties
